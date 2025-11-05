@@ -23,7 +23,7 @@ A full-stack web application that integrates with Jira Cloud REST API and uses G
   - Status and priority color coding
   - Loading states and error handling
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
 - **Python 3.9+**
@@ -38,7 +38,7 @@ A full-stack web application that integrates with Jira Cloud REST API and uses G
 - **Tailwind CSS**: Utility-first CSS framework
 - **React Hooks**: Modern state management
 
-## 📋 Prerequisites
+## Prerequisites
 
 1. **Jira Cloud Account**
    - Access to a Jira Cloud instance
@@ -53,7 +53,7 @@ A full-stack web application that integrates with Jira Cloud REST API and uses G
    - Node.js 18 or higher
    - npm or yarn
 
-## 🔧 Setup Instructions
+## Setup Instructions
 
 ### 1. Clone the Repository
 
