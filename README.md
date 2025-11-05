@@ -1,8 +1,8 @@
-<!-- # Jira AI Analyzer
+# Jira AI Analyzer
 
 A full-stack web application that integrates with Jira Cloud REST API and uses Groq AI to analyze and provide intelligent suggestions for Jira tickets.
 
-## 🚀 Features
+## Features
 
 - **Jira Integration**: Connect to Jira Cloud and manage issues
   - List all issues with pagination
@@ -23,7 +23,7 @@ A full-stack web application that integrates with Jira Cloud REST API and uses G
   - Status and priority color coding
   - Loading states and error handling
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
 - **Python 3.9+**
@@ -38,7 +38,7 @@ A full-stack web application that integrates with Jira Cloud REST API and uses G
 - **Tailwind CSS**: Utility-first CSS framework
 - **React Hooks**: Modern state management
 
-## 📋 Prerequisites
+## Prerequisites
 
 1. **Jira Cloud Account**
    - Access to a Jira Cloud instance
@@ -53,7 +53,7 @@ A full-stack web application that integrates with Jira Cloud REST API and uses G
    - Node.js 18 or higher
    - npm or yarn
 
-## 🔧 Setup Instructions
+## Setup Instructions
 
 ### 1. Clone the Repository
 
@@ -150,7 +150,7 @@ npm run dev
 
 The frontend will run on `http://localhost:3000`
 
-## 📖 API Documentation
+## API Documentation
 
 Once the backend is running, visit:
 - Swagger UI: http://localhost:8000/docs
@@ -168,7 +168,7 @@ Once the backend is running, visit:
 - `POST /api/analyze` - Analyze all issues
 - `POST /api/analyze/{issue_key}` - Analyze single issue
 
-## 🎯 Usage Guide
+## Usage Guide
 
 ### Creating an Issue
 
@@ -209,28 +209,7 @@ The AI analyzes tickets for:
 - **Priority**: Recommends High/Medium/Low priority
 - **Confidence Score**: Shows AI's confidence level (0-100%)
 
-## 🌟 Bonus Features Implemented
-
-✅ Pagination support for Jira tickets
-✅ AI auto-prioritization of tickets
-✅ Confidence scores for AI suggestions
-✅ Clean UI with Tailwind CSS
-✅ Real-time loading indicators
-✅ Error handling and validation
-✅ Responsive design
-
-## 📸 Screenshots
-
-### Main Dashboard
-![Dashboard showing list of issues with AI analysis]
-
-### Create Issue Modal
-![Modal for creating new Jira issues]
-
-### AI Analysis
-![AI-generated suggestions and priority recommendations]
-
-## 🚀 Deployment
+## Deployment
 
 ### Backend (Render/Railway)
 
@@ -249,7 +228,7 @@ web: uvicorn main:app --host 0.0.0.0 --port $PORT
    - `NEXT_PUBLIC_API_URL`: Your backend URL
 3. Deploy
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -267,7 +246,7 @@ web: uvicorn main:app --host 0.0.0.0 --port $PORT
 - Verify frontend URL is in backend CORS settings
 - Check that both servers are running
 
-## 📝 Project Structure
+## Project Structure
 
 ```
 jira-ai-analyzer/
@@ -293,19 +272,11 @@ jira-ai-analyzer/
 └── README.md
 ```
 
-## 🤝 Contributing
+## Author
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Harsh Singh
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👤 Author
-
-Your Name - Assessment Project
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Jira Cloud REST API
 - Groq AI Platform
