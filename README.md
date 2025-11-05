@@ -150,7 +150,7 @@ npm run dev
 
 The frontend will run on `http://localhost:3000`
 
-## 📖 API Documentation
+## API Documentation
 
 Once the backend is running, visit:
 - Swagger UI: http://localhost:8000/docs
@@ -168,7 +168,7 @@ Once the backend is running, visit:
 - `POST /api/analyze` - Analyze all issues
 - `POST /api/analyze/{issue_key}` - Analyze single issue
 
-## 🎯 Usage Guide
+## Usage Guide
 
 ### Creating an Issue
 
@@ -208,16 +208,6 @@ The AI analyzes tickets for:
 - **Next Steps**: Suggests actionable improvements
 - **Priority**: Recommends High/Medium/Low priority
 - **Confidence Score**: Shows AI's confidence level (0-100%)
-
-## Bonus Features Implemented
-
-✅ Pagination support for Jira tickets
-✅ AI auto-prioritization of tickets
-✅ Confidence scores for AI suggestions
-✅ Clean UI with Tailwind CSS
-✅ Real-time loading indicators
-✅ Error handling and validation
-✅ Responsive design
 
 ## Deployment
 
