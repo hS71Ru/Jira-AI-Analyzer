@@ -11,43 +11,75 @@ load_dotenv()
 class AIService:
     def __init__(self):
         self.client = Groq(api_key=os.getenv("GROQ_API_KEY"))
-        self.model = "llama-3.1-70b-versatile"  # or "mixtral-8x7b-32768"
+        self.model = "llama-3.3-70b-versatile"
 
     def analyze_issue(self, issue: JiraIssue, all_issues: List[JiraIssue]) -> AIAnalysis:
         """Analyze a single Jira issue using Groq AI"""
         
-        # Create context about other issues for duplicate detection
         other_issues_context = "\n".join([
             f"- {i.key}: {i.summary}" for i in all_issues if i.key != issue.key
-        ][:20])  # Limit to 20 issues to avoid token limits
-        
-        prompt = f"""Analyze the following Jira ticket and provide insights:
+        ][:20])
 
-Issue Key: {issue.key}
-Summary: {issue.summary}
-Description: {issue.description or "No description provided"}
-Status: {issue.status}
-Priority: {issue.priority or "Not set"}
+        prompt = f"""
+            You are an experienced Agile project manager and software analyst with deep expertise in Jira workflows, sprint management, and software quality analysis.
 
-Other tickets in the system:
-{other_issues_context}
+            Your task is to analyze a Jira issue and produce a detailed JSON summary that helps improve ticket quality, identify potential duplicates, and suggest next actions.
 
-Please provide:
-1. Potential duplicate tickets (check if similar issues exist)
-2. Quality assessment (check for missing information like acceptance criteria, steps to reproduce, etc.)
-3. Suggested next steps or improvements
-4. Priority recommendation (High/Medium/Low) based on the description
+            ---
 
-Format your response as JSON with the following structure:
-{{
-    "suggestions": ["suggestion1", "suggestion2", ...],
-    "priority_recommendation": "High/Medium/Low",
-    "confidence_score": 0.0-1.0
-}}
+            ### ISSUE CONTEXT
 
-Be specific and actionable in your suggestions."""
+            **Issue Key:** {issue.key}  
+            **Summary:** {issue.summary}  
+            **Description:** {issue.description or "No description provided"}  
+            **Status:** {issue.status}  
+            **Priority:** {issue.priority or "Not set"}  
+
+            ---
+
+            ### RELATED TICKETS (for potential duplicates or context)
+            {other_issues_context or "No related issues available"}
+
+            ---
+
+            ### YOUR TASKS
+
+            1. **Duplicate Detection**  
+                Identify if this issue seems similar to any of the related tickets. Provide likely duplicates (if any).
+
+            2. **Quality Assessment**  
+                Evaluate if the issue has missing or unclear information (e.g., missing acceptance criteria, unclear reproduction steps, or incomplete description).
+
+            3. **Next Steps / Recommendations**  
+                Suggest actionable improvements — e.g., clarify description, attach screenshots, define clear acceptance criteria, etc.
+
+            4. **Priority Recommendation**  
+                Suggest a priority level (`High`, `Medium`, or `Low`) based on urgency, business impact, and clarity.
+
+            ---
+
+            ### RESPO NSE FORMAT (JSON ONLY)
+
+            Return a **strictly valid JSON** object in the format below:
+
+            {{
+                "duplicates": ["JIRA-123", "JIRA-456"],
+                "suggestions": ["Add acceptance criteria", "Clarify reproduction steps"],
+                "priority_recommendation": "High",
+                "confidence_score": 0.87
+            }}
+
+            Ensure:
+            - The JSON is complete and syntactically valid.
+            - `confidence_score` is a float between 0.0 and 1.0 indicating certainty of analysis.
+            - If unsure, make your best estimate based on context.
+
+            ---
+            """
 
         try:
+            print(f"Analyzing issue {issue.key} with model {self.model}")
+            
             response = self.client.chat.completions.create(
                 messages=[
                     {
@@ -66,8 +98,9 @@ Be specific and actionable in your suggestions."""
             
             content = response.choices[0].message.content
             
-            # Try to extract JSON from the response
             analysis_data = self._parse_ai_response(content)
+            
+            print(f"Successfully analyzed {issue.key}")
             
             return AIAnalysis(
                 issue_key=issue.key,
@@ -78,7 +111,7 @@ Be specific and actionable in your suggestions."""
             )
         
         except Exception as e:
-            # Fallback analysis if AI fails
+            print(f"Error analyzing {issue.key}: {str(e)}")
             return AIAnalysis(
                 issue_key=issue.key,
                 summary=issue.summary,
@@ -98,12 +131,10 @@ Be specific and actionable in your suggestions."""
     def _parse_ai_response(self, content: str) -> Dict[str, Any]:
         """Parse AI response and extract JSON"""
         try:
-            # Try to find JSON in the response
             json_match = re.search(r'\{.*\}', content, re.DOTALL)
             if json_match:
                 return json.loads(json_match.group())
             else:
-                # Fallback: parse suggestions from text
                 return {
                     "suggestions": [content],
                     "priority_recommendation": "Medium",

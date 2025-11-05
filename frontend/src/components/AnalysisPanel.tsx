@@ -1,6 +1,6 @@
 'use client';
 
-import { AIAnalysis } from '@/lib/api';
+import { AIAnalysis } from '@/services/api';
 
 interface AnalysisPanelProps {
   analysis: AIAnalysis;

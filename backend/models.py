@@ -30,4 +30,4 @@ class AIAnalysis(BaseModel):
     confidence_score: Optional[float]
 
 class AIAnalysisRequest(BaseModel):
-    issue_keys: Optional[List[str]] = None  # If None, analyze all issues
+    issue_keys: Optional[List[str]] = None

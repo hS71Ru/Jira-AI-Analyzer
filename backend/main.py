@@ -10,7 +10,7 @@ app = FastAPI(title="Jira AI Analyzer API")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Next.js default port
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -24,14 +24,22 @@ ai_service = AIService()
 def read_root():
     return {"message": "Jira AI Analyzer API", "status": "running"}
 
+@app.get("/api/projects")
+def get_projects():
+    """Get all accessible Jira projects"""
+    try:
+        return jira_service.get_projects()
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
 @app.get("/api/issues", response_model=dict)
 def get_issues(
     max_results: int = Query(50, ge=1, le=100),
-    start_at: int = Query(0, ge=0)
+    next_page_token: Optional[str] = Query(None)
 ):
     """Get all Jira issues with pagination"""
     try:
-        return jira_service.get_issues(max_results=max_results, start_at=start_at)
+        return jira_service.get_issues(max_results=max_results, next_page_token=next_page_token)
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
@@ -63,20 +71,17 @@ def update_issue(issue_key: str, update_data: JiraIssueUpdate):
 def analyze_issues(request: AIAnalysisRequest):
     """Analyze Jira issues using AI"""
     try:
-        # Fetch issues
         issues_data = jira_service.get_issues(max_results=100)
         all_issues = issues_data["issues"]
         
         if not all_issues:
             raise HTTPException(status_code=404, detail="No issues found")
         
-        # Filter issues if specific keys are provided
         if request.issue_keys:
             issues_to_analyze = [i for i in all_issues if i.key in request.issue_keys]
         else:
             issues_to_analyze = all_issues
         
-        # Analyze issues
         analyses = ai_service.analyze_multiple_issues(issues_to_analyze)
         return analyses
     
@@ -87,11 +92,9 @@ def analyze_issues(request: AIAnalysisRequest):
 def analyze_single_issue(issue_key: str):
     """Analyze a single Jira issue using AI"""
     try:
-        # Fetch all issues for context
         issues_data = jira_service.get_issues(max_results=100)
         all_issues = issues_data["issues"]
         
-        # Find the specific issue
         target_issue = None
         for issue in all_issues:
             if issue.key == issue_key:
@@ -101,7 +104,6 @@ def analyze_single_issue(issue_key: str):
         if not target_issue:
             raise HTTPException(status_code=404, detail=f"Issue {issue_key} not found")
         
-        # Analyze the issue
         analysis = ai_service.analyze_issue(target_issue, all_issues)
         return analysis
     

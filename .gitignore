@@ -42,6 +42,16 @@ htmlcov/
 logs/
 *.log
 
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+backend/venv/
+backend/env/
+backend/.venv/
+
 # From frontend/.gitignore:
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
@@ -85,3 +95,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Dependencies
+frontend/node_modules/
+
+# Next.js
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/dist/
