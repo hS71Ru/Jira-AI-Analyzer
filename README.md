@@ -1,8 +1,8 @@
-<!-- # Jira AI Analyzer
+# Jira AI Analyzer
 
 A full-stack web application that integrates with Jira Cloud REST API and uses Groq AI to analyze and provide intelligent suggestions for Jira tickets.
 
-## 🚀 Features
+## Features
 
 - **Jira Integration**: Connect to Jira Cloud and manage issues
   - List all issues with pagination
@@ -209,7 +209,7 @@ The AI analyzes tickets for:
 - **Priority**: Recommends High/Medium/Low priority
 - **Confidence Score**: Shows AI's confidence level (0-100%)
 
-## 🌟 Bonus Features Implemented
+## Bonus Features Implemented
 
 ✅ Pagination support for Jira tickets
 ✅ AI auto-prioritization of tickets
@@ -219,18 +219,7 @@ The AI analyzes tickets for:
 ✅ Error handling and validation
 ✅ Responsive design
 
-## 📸 Screenshots
-
-### Main Dashboard
-![Dashboard showing list of issues with AI analysis]
-
-### Create Issue Modal
-![Modal for creating new Jira issues]
-
-### AI Analysis
-![AI-generated suggestions and priority recommendations]
-
-## 🚀 Deployment
+## Deployment
 
 ### Backend (Render/Railway)
 
@@ -249,7 +238,7 @@ web: uvicorn main:app --host 0.0.0.0 --port $PORT
    - `NEXT_PUBLIC_API_URL`: Your backend URL
 3. Deploy
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -267,7 +256,7 @@ web: uvicorn main:app --host 0.0.0.0 --port $PORT
 - Verify frontend URL is in backend CORS settings
 - Check that both servers are running
 
-## 📝 Project Structure
+## Project Structure
 
 ```
 jira-ai-analyzer/
@@ -293,19 +282,11 @@ jira-ai-analyzer/
 └── README.md
 ```
 
-## 🤝 Contributing
+## Author
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Harsh Singh
 
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 👤 Author
-
-Your Name - Assessment Project
-
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - Jira Cloud REST API
 - Groq AI Platform
